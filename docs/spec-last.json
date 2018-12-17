@@ -1,0 +1,138 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+  "data": {
+    "url": "data/vega-gender-by-party.csv"
+  },
+  "description": "Gender breakdown by party in house over time",
+  "config": {
+    "style": {
+      "cell": {
+        "stroke": "transparent"
+      }
+    }
+  },
+  "autosize": {
+    "type": "fit"
+  },
+  "encoding": {
+    "x": {
+      "field": "session_year",
+      "type": "temporal",
+      "timeUnit": "year",
+      "axis": {
+        "title": "",
+        "values": [1860, 1875, 1900, 1925, 1950, 1975, 2000, 2018],
+        "grid": false
+      }
+    },
+    "y": {
+      "field": "prop",
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          0,
+          1
+        ]
+      },
+      "axis": {
+        "values": [0, 0.25, 0.5, 0.75, 1],
+        "format": "%",
+        "title": "Percentage of party seats",
+        "ticks": false,
+        "labelPadding": 5
+      }
+    },
+    "color": {
+      "field": "party",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Democrat",
+          "Republican"
+        ],
+        "range": [
+          "#377EB8",
+          "#E41A1C"
+        ]
+      },
+      "legend": null
+    },
+    "tooltip": {
+      "value": null
+    }
+  },
+  "layer": [
+    {
+      "transform": [
+        {
+          "filter": {
+            "field": "data",
+            "equal": "data"
+          }
+        }
+      ],
+      "mark": "line"
+    },
+    {
+      "transform": [
+        {
+          "filter": {
+            "field": "data",
+            "equal": "data"
+          }
+        },
+        {
+          "filter": {
+            "field": "party",
+            "equal": "Democrat"
+          }
+        },
+        {
+          "calculate": "1",
+          "as": "one"
+        }
+      ],
+      "mark": {
+        "type": "bar"
+      },
+      "encoding": {
+        "y": {
+          "field": "one",
+          "type": "quantitative"
+        },
+        "opacity": {
+          "value": 0
+        },
+        "tooltip": {
+          "field": "caption"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": {
+            "field": "data",
+            "equal": "annotation"
+          }
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": 0
+      },
+      "encoding": {
+        "text": {
+          "field": "party",
+          "type": "nominal"
+        },
+        "y": {
+          "stack": null,
+          "field": "prop",
+          "type": "quantitative"
+        }
+      }
+    }
+  ]
+}

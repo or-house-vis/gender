@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="https://cdn.jsdelivr.net/gh/vega/vega@4.4.0/docs/assets/promise.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/vega/vega@4.4.0/docs/assets/symbol.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/vega/vega@4.4.0/docs/assets/fetch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega@4.3.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@3.0.0-rc1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@3.24.2"></script>	
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	
+	<title>House Makeup</title>
+</head>
+
+<body>  
+  <div class="container main-container">
+  <div class="row">
+    <div class="col-sm">
+      <div  id = "charts">
+      <h1 class="display-4">Female held seats in the Oregon House</h1>
+      <p>Some descriptive text here.  Based on seat holder at the start of the session.</p>
+      <div id="vis-first"></div>
+      <h1 class="display-4">Female held seats by party in the Oregon House</h1>
+      <p>Some descriptive text here.  Based on seat holder at the start of the session.</p>
+      <div id="vis-last"></div>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  <script>
+    const spec = "spec-first.json";
+  	vegaEmbed('#vis-first', spec, {
+      defaultStyle: true, 
+  	  tooltip: { sanitize: function sanitize(value) {return String(value);} },
+  	  actions: false,
+  	  renderer: "svg"
+  	})
+  	  .then(function(result) {
+          VIEW = result.view;
+          w = document.getElementById('charts').offsetWidth;
+          VIEW.width(w).run();
+      })
+      .catch(console.warn);
+  	
+  	const spec2 = "spec-last.json";
+  	vegaEmbed('#vis-last', spec2, {
+      defaultStyle: true, 
+  	  tooltip: { sanitize: function sanitize(value) {return String(value);} },
+  	  actions: false,
+  	  renderer: "svg"
+  	})
+  	  .then(function(result) {
+          VIEW2 = result.view;
+          w = document.getElementById('charts').offsetWidth;
+          VIEW2.width(w).run();
+      })
+      .catch(console.warn);
+      
+  	var addEvent = function(object, type, callback) {
+      if (object == null || typeof(object) == 'undefined') return;
+      if (object.addEventListener) {
+          object.addEventListener(type, callback, false);
+      } else if (object.attachEvent) {
+          object.attachEvent("on" + type, callback);
+      } else {
+          object["on"+type] = callback;
+      }
+    };
+  	
+  	addEvent(window, "resize", function(event) {
+      const element = document.getElementById('charts');
+      VIEW.width(element.offsetWidth).run();
+      VIEW2.width(element.offsetWidth).run();
+    });
+  </script>
+
+</body>
