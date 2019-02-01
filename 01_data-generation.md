@@ -9,7 +9,7 @@ library(here)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ───────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.1.0     ✔ purrr   0.2.5
     ## ✔ tibble  2.0.1     ✔ dplyr   0.7.8
@@ -18,7 +18,7 @@ library(tidyverse)
 
     ## Warning: package 'tibble' was built under R version 3.5.2
 
-    ## ── Conflicts ──────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ───────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -165,7 +165,7 @@ Weird captions
 party_captions <- party_captions %>% 
   mutate(
     caption = ifelse(session_year %in% c(1887, 1889, 1891),
-      "<strong>{session_year}</strong> {Party affiliations unknown.}",
+      glue("<strong>{session_year}</strong> Party affiliations unknown."),
       caption
     )
   )

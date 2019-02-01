@@ -165,5 +165,7 @@ session_year,party,gender,n,total,prop,data,caption
 2017-01-01T12:00:00Z,Republican,Female,3,25,0.12,data,<strong>2017</strong><br />54%  of Democrats (19/35 seats) and <br />12%  of Republicans (3/25 seats) are female.
 2018-01-01T12:00:00Z,Democrat,Female,19,35,0.5428571428571428,data,<strong>2018</strong><br />54%  of Democrats (19/35 seats) and <br />12%  of Republicans (3/25 seats) are female.
 2018-01-01T12:00:00Z,Republican,Female,3,25,0.12,data,<strong>2018</strong><br />54%  of Democrats (19/35 seats) and <br />12%  of Republicans (3/25 seats) are female.
+2019-01-01T12:00:00Z,Democrat,Female,22,38,0.5789473684210527,data,<strong>2019</strong><br />58%  of Democrats (22/38 seats) and <br />27%  of Republicans (6/22 seats) are female.
+2019-01-01T12:00:00Z,Republican,Female,6,22,0.2727272727272727,data,<strong>2019</strong><br />58%  of Democrats (22/38 seats) and <br />27%  of Republicans (6/22 seats) are female.
 2018-01-01T12:00:00Z,Democrat,NA,NA,NA,0.58,annotation,NA
 2018-01-01T12:00:00Z,Republican,NA,NA,NA,0.05,annotation,NA

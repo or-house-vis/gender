@@ -127,8 +127,8 @@ Party annotations
 ```{r}
 anno_party <- tribble(
   ~ session_year, ~ party, ~ prop,
-            2018,     "Democrat",    0.58,
-            2018,     "Republican",    0.05
+            2019,     "Democrat",    0.58,
+            2019,     "Republican",    0.05
 ) %>% 
   mutate(
     data = "annotation"
