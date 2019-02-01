@@ -1,4 +1,4 @@
-session_year,party,Gender,n,total,prop,data,caption
+session_year,party,gender,n,total,prop,data,caption
 1860-01-01T12:00:00Z,Democrat,Female,0,24,0,data,<strong>1860</strong><br />0%  of Democrats (0/24 seats) and <br />0%  of Republicans (0/10 seats) are female.
 1860-01-01T12:00:00Z,Republican,Female,0,10,0,data,<strong>1860</strong><br />0%  of Democrats (0/24 seats) and <br />0%  of Republicans (0/10 seats) are female.
 1862-01-01T12:00:00Z,Democrat,Female,0,1,0,data,<strong>1862</strong><br />0%  of Democrats (0/1 seats) and <br />0%  of Republicans (0/33 seats) are female.
@@ -25,9 +25,16 @@ session_year,party,Gender,n,total,prop,data,caption
 1882-01-01T12:00:00Z,Republican,Female,0,38,0,data,<strong>1882</strong><br />0%  of Democrats (0/20 seats) and <br />0%  of Republicans (0/38 seats) are female.
 1885-01-01T12:00:00Z,Democrat,Female,0,24,0,data,<strong>1885</strong><br />0%  of Democrats (0/24 seats) and <br />0%  of Republicans (0/36 seats) are female.
 1885-01-01T12:00:00Z,Republican,Female,0,36,0,data,<strong>1885</strong><br />0%  of Democrats (0/24 seats) and <br />0%  of Republicans (0/36 seats) are female.
+1887-01-01T12:00:00Z,Democrat,Female,0,0,NaN,data,<strong>1887</strong> Party affiliations unknown.
+1887-01-01T12:00:00Z,Republican,Female,0,0,NaN,data,<strong>1887</strong> Party affiliations unknown.
+1889-01-01T12:00:00Z,Democrat,Female,0,0,NaN,data,<strong>1889</strong> Party affiliations unknown.
+1889-01-01T12:00:00Z,Republican,Female,0,0,NaN,data,<strong>1889</strong> Party affiliations unknown.
+1891-01-01T12:00:00Z,Democrat,Female,0,0,NaN,data,<strong>1891</strong> Party affiliations unknown.
+1891-01-01T12:00:00Z,Republican,Female,0,0,NaN,data,<strong>1891</strong> Party affiliations unknown.
 1893-01-01T12:00:00Z,Democrat,Female,0,19,0,data,<strong>1893</strong><br />0%  of Democrats (0/19 seats) and <br />0%  of Republicans (0/38 seats) are female.
 1893-01-01T12:00:00Z,Republican,Female,0,38,0,data,<strong>1893</strong><br />0%  of Democrats (0/19 seats) and <br />0%  of Republicans (0/38 seats) are female.
-1895-01-01T12:00:00Z,Republican,Female,0,53,0,data,<strong>1895</strong><br />NA%  of Democrats (NA/NA seats) and <br />0%  of Republicans (0/53 seats) are female.
+1895-01-01T12:00:00Z,Democrat,Female,0,0,NaN,data,<strong>1895</strong><br />NaN%  of Democrats (0/0 seats) and <br />0%  of Republicans (0/53 seats) are female.
+1895-01-01T12:00:00Z,Republican,Female,0,53,0,data,<strong>1895</strong><br />NaN%  of Democrats (0/0 seats) and <br />0%  of Republicans (0/53 seats) are female.
 1897-01-01T12:00:00Z,Democrat,Female,0,4,0,data,<strong>1897</strong><br />0%  of Democrats (0/4 seats) and <br />0%  of Republicans (0/39 seats) are female.
 1897-01-01T12:00:00Z,Republican,Female,0,39,0,data,<strong>1897</strong><br />0%  of Democrats (0/4 seats) and <br />0%  of Republicans (0/39 seats) are female.
 1899-01-01T12:00:00Z,Democrat,Female,0,6,0,data,<strong>1899</strong><br />0%  of Democrats (0/6 seats) and <br />0%  of Republicans (0/46 seats) are female.

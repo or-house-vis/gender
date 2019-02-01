@@ -38,9 +38,6 @@ library(glue)
 library(history) 
 ```
 
-Gender by party
-===============
-
 Gender overall
 ==============
 
@@ -127,4 +124,89 @@ render_diff(diffs)
 ``` r
 gender_overall_captioned %>% 
   write_csv(here("docs", "data", "vega-gender-overall.csv"))
+```
+
+Gender by party
+===============
+
+``` r
+gender_by_party <- house_reps_regular %>% 
+  group_by(session_year, party, gender) %>% 
+  count() %>%
+  ungroup() %>% 
+  complete(session_year, party, gender, fill = list(n = 0)) %>% 
+  group_by(session_year, party) %>% 
+  mutate(
+    total = sum(n),
+    prop = n/total
+    ) %>% 
+  filter(party %in% c("Democrat", "Republican")) %>% 
+  filter(gender == "Female") %>% 
+  ungroup() 
+```
+
+Add captions
+
+``` r
+party_captions <- gender_by_party %>% 
+  select(session_year, n, total, prop, party) %>% 
+  gather("type", "value", -session_year, -party) %>% 
+  unite("party_type", party, type) %>% 
+  spread(party_type, value) %>% 
+  mutate(caption = glue(
+    "<strong>{ session_year }</strong><br />{round(Democrat_prop, 2)*100}%  of Democrats ({ Democrat_n }/{ Democrat_total } seats) and <br />{ round(Republican_prop, 2)*100 }%  of Republicans ({ Republican_n }/{ Republican_total } seats) are female.")
+  ) %>% 
+  select(session_year, caption)
+```
+
+Weird captions
+
+``` r
+party_captions <- party_captions %>% 
+  mutate(
+    caption = ifelse(session_year %in% c(1887, 1889, 1891),
+      "<strong>{session_year}</strong> {Party affiliations unknown.}",
+      caption
+    )
+  )
+```
+
+Party annotations
+
+``` r
+anno_party <- tribble(
+  ~ session_year, ~ party, ~ prop,
+            2018,     "Democrat",    0.58,
+            2018,     "Republican",    0.05
+) %>% 
+  mutate(
+    data = "annotation"
+  )
+```
+
+``` r
+gender_by_party_captioned <- gender_by_party %>% 
+  mutate(data = "data") %>% 
+  left_join(party_captions) %>% 
+  bind_rows(anno_party) %>% 
+  mutate(
+    session_year = ISOdate(year = session_year, 
+      month = 1, day = 1, tz = "utc")
+  )
+```
+
+    ## Joining, by = "session_year"
+
+Examine changes
+
+``` r
+library(daff)
+old <- read_csv(here("docs", "data", "vega-gender-by-party.csv"))
+diffs <- diff_data(gender_by_party_captioned, old, ordered = FALSE)
+render_diff(diffs)
+```
+
+``` r
+gender_by_party_captioned %>% 
+  write_csv(here("docs", "data", "vega-gender-by-party.csv"))
 ```
