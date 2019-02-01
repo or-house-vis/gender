@@ -43,7 +43,7 @@
       }
     },
     "color": {
-      "field": "Gender",
+      "field": "gender",
       "type": "nominal",
       "scale": {
         "domain": ["Female", "Male"],
@@ -72,7 +72,7 @@
           }
         },
         {
-          "calculate": "if(datum.Gender == 'Female', 0, 1)",
+          "calculate": "if(datum.gender == 'Female', 0, 1)",
           "as": "gender_order"
         }
       ],
@@ -87,7 +87,7 @@
           }
         },
         {
-          "calculate": "if(datum.Gender == 'Female', 0, 1)",
+          "calculate": "if(datum.gender == 'Female', 0, 1)",
           "as": "gender_order"
         }
       ],
@@ -112,7 +112,7 @@
         },
         {
           "filter": {
-            "field": "Gender",
+            "field": "gender",
             "equal": "Male"
           }
         }
@@ -145,7 +145,7 @@
         },
         {
           "filter": {
-            "field": "Gender",
+            "field": "gender",
             "equal": "Female"
           }
         }
