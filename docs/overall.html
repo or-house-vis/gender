@@ -19,23 +19,14 @@
 
 <body>  
   <div class="container main-container">
-  <div class="row">
-    <div class="col-sm">
-      <div  id = "charts">
-      <h1 class="display-4">Female held seats in the Oregon House</h1>
-      <p>Some descriptive text here.  Based on seat holder at the start of the session.</p>
-      <div id="vis-first"></div>
-      <h1 class="display-4">Female held seats by party in the Oregon House</h1>
-      <p>Some descriptive text here.  Based on seat holder at the start of the session.</p>
-      <div id="vis-last"></div>
-      </div>
+    <div  id = "charts">
+      <div id="vis-overall"></div>
     </div>
-  </div>
   </div>
   
   <script>
-    const spec = "spec-first.json";
-  	vegaEmbed('#vis-first', spec, {
+    const spec = "spec-overall.json";
+  	vegaEmbed('#vis-overall', spec, {
       defaultStyle: true, 
   	  tooltip: { sanitize: function sanitize(value) {return String(value);} },
   	  actions: false,
@@ -48,20 +39,6 @@
       })
       .catch(console.warn);
   	
-  	const spec2 = "spec-last.json";
-  	vegaEmbed('#vis-last', spec2, {
-      defaultStyle: true, 
-  	  tooltip: { sanitize: function sanitize(value) {return String(value);} },
-  	  actions: false,
-  	  renderer: "svg"
-  	})
-  	  .then(function(result) {
-          VIEW2 = result.view;
-          w = document.getElementById('charts').offsetWidth;
-          VIEW2.width(w).run();
-      })
-      .catch(console.warn);
-      
   	var addEvent = function(object, type, callback) {
       if (object == null || typeof(object) == 'undefined') return;
       if (object.addEventListener) {
@@ -76,7 +53,6 @@
   	addEvent(window, "resize", function(event) {
       const element = document.getElementById('charts');
       VIEW.width(element.offsetWidth).run();
-      VIEW2.width(element.offsetWidth).run();
     });
   </script>
 
