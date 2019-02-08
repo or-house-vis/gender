@@ -1,9 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
-  "data": {
-    "url": "data/vega-gender-overall.csv"
+  "autosize": {
+    "type": "fit"
   },
-  "description": "Gender breakdown in house over time",
   "config": {
     "style": {
       "cell": {
@@ -11,9 +10,10 @@
       }
     }
   },
-  "autosize": {
-    "type": "fit"
+  "data": {
+    "url": "data/vega-gender-overall.csv"
   },
+  "description": "Gender breakdown in house over time",
   "encoding": {
     "x": {
       "field": "session_year",
