@@ -13,30 +13,34 @@ library(here)
 end_year <- 2019
 ```
 
-## Gender Overall
+## Common pieces
 
-```{r}
-spec_overall <- list(
-  `$schema` = "https://vega.github.io/schema/vega-lite/v3.json", 
-  data = list(url = "data/vega-gender-overall.csv"), 
-  description = "Gender breakdown in house over time",
+Common config:
+```{r spec-common}
+spec_common <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v3.json",
+  autosize = list(type = "fit"),
   config = list(style = list(cell = list(stroke = "transparent"))))
 ```
 
-```{r}
-gender_plot <- list(
-  encoding = list(
-    x = list(
-      field = "session_year",
-      type = "temporal",
-      timeUnit = "year",
-      axis = list(
-        title = "",
-        values = c(1860, seq(1875, end_year, by = 25), end_year),
-        grid = FALSE
-      )
-    ),
-    y = list(
+Common time axis:
+```{r session-year-axis}
+session_year_axis <- list(
+  field = "session_year",
+  type = "temporal",
+  timeUnit = "year",
+  axis = list(
+    title = "",
+    values = c(1860, seq(1875, end_year, by = 25), end_year),
+    grid = FALSE
+  )
+)
+```
+
+Proportions on the y-axis:
+```{r proportion-axis}
+proportion_axis <- function(title) {
+  list(
       field = "prop",
       type = "quantitative",
       scale = list(
@@ -45,20 +49,81 @@ gender_plot <- list(
       axis = list(
         values = seq(0, 1, .25),
         format = "%",
-        title = "Percentage of house seats",
+        title = title,
         ticks = FALSE,
         labelPadding = 5
       )
+    )
+}
+```
+
+## Gender Overall
+```{r overall_color}
+overall_color <- 
+  list(
+    field = "gender",
+    type = "nominal",
+    scale = list(
+      domain = c("Female", "Male"), 
+      range = c("#6F50A1", "#AAC8BD")
     ),
-    color = list(
-      field = "gender",
-      type = "nominal",
-      scale = list(
-        domain = c("Female", "Male"), 
-        range = c("#6F50A1", "#AAC8BD")
+    legend = NULL
+  )
+```
+
+### Annotations
+Annotation data
+```{r}
+anno <- tribble(
+  ~ gender, ~ session_year, ~ prop,
+  "Male"  ,           1865,    0.95,
+  "Female",           2013,    0.05
+) %>% 
+  mutate(
+    session_year = ISOdate(year = session_year, 
+      month = 1, day = 1, tz = "utc")
+  )
+```
+
+Annotation layers
+```{r}
+annotation_layer <- function(data, label, align = "left", baseline = "top", color = "black", opacity = 0.5){
+  list(
+    data = list(
+      values = pmap(data, list)
+    ),
+    mark = list(
+      type = "text",
+      size = 20,
+      align = align,
+      baseline = baseline
+    ),
+    encoding = list(
+      text = list(
+        value = label
       ),
-      legend = NULL
-    ),
+      color = list(
+        value = color
+      ),
+      opacity = list(
+        value = opacity
+      )
+    )
+  )
+}
+
+male_anno <- annotation_layer(anno[1, ], "Male")
+female_anno <- annotation_layer(anno[2, ], "Female",
+  color = "white", align = "right", baseline = "bottom")
+```
+
+
+```{r gender-overall}
+gender_plot <- list(
+  encoding = list(
+    x = session_year_axis,
+    y = proportion_axis("Percentage of house seats"),
+    color = overall_color,
     opacity = list(
       value = 0.8
     ),
@@ -74,9 +139,6 @@ gender_plot <- list(
     list(
       transform = list(
         list(
-          filter = list(field = "data", equal = "data")
-        ),
-        list(
           calculate = "if(datum.gender == 'Female', 0, 1)",
           as = "gender_order"
         )
@@ -85,9 +147,6 @@ gender_plot <- list(
     ),
     list(
       transform = list(
-        list(
-          filter = list(field = "data", equal = "data")
-        ),
         list(
           calculate = "if(datum.gender == 'Female', 0, 1)",
           as = "gender_order"
@@ -104,65 +163,19 @@ gender_plot <- list(
         )
       )
     ),
-    list(
-      transform = list(
-        list(
-          filter = list(field = "data", equal = "annotation")
-        ),
-        list(
-          filter = list(field = "gender", equal = "Male")
-        )
-      ),
-      mark = list(
-        type = "text",
-        size = 20,
-        align = "left",
-        baseline = "top"
-      ),
-      encoding = list(
-        text = list(
-          value = "Male"
-        ),
-        color = list(
-          value = "black"
-        ),
-        opacity = list(
-          value = 0.5
-        )
-      )
-    ),
-    list(
-      transform = list(
-        list(
-          filter = list(field = "data", equal = "annotation")
-        ),
-        list(
-          filter = list(field = "gender", equal = "Female")
-        )
-      ),
-      mark = list(
-        type = "text",
-        size = 20,
-        align = "right",
-        baseline = "bottom"
-      ),
-      encoding = list(
-        text = list(
-          value = "Female"
-        ),
-        color = list(
-          value = "white"
-        ),
-        opacity = list(
-          value = 0.5
-        )
-      )
-    )
+    male_anno,
+    female_anno
   )
 )  
 
+overall_params <- list(
+  data = list(url = "data/vega-gender-overall.csv"), 
+  description = "Gender breakdown in house over time"
+)
 
-spec_overall %>% c(list(autosize = list(type = "fit")), gender_plot) %>% 
+spec_common %>% 
+  c(overall_params) %>% 
+  c(gender_plot) %>% 
   write_json(here("docs", "spec-overall.json"), 
   auto_unbox = TRUE, pretty = TRUE, null = "null")
 ```
@@ -170,40 +183,17 @@ spec_overall %>% c(list(autosize = list(type = "fit")), gender_plot) %>%
 ## Gender by party
 
 ```{r}
-spec_party <- list(
-    `$schema` = "https://vega.github.io/schema/vega-lite/v3.json", 
+party_params <- list(
     data = list(url = "data/vega-gender-by-party.csv"), 
-    description = "Gender breakdown by party in house over time",
-    config = list(style = list(cell = list(stroke = "transparent"))))
+    description = "Gender breakdown by party in house over time"
+  )
 ```
 
-```{r}
+```{r gender-by-party}
 gender_by_party_plot <- list(
   encoding = list(
-    x = list(
-      field = "session_year",
-      type = "temporal",
-      timeUnit = "year",
-      axis = list(
-        title = "",
-        values = c(1860, seq(1875, end_year, by = 25), end_year),
-        grid = FALSE
-      )
-    ),
-    y = list(
-      field = "prop",
-      type = "quantitative",
-      scale = list(
-        domain = list(0, 1)
-      ),
-      axis = list(
-        values = seq(0, 1, .25),
-        format = "%",
-        title = "Percentage of party seats",
-        ticks = FALSE,
-        labelPadding = 5
-      )
-    ),
+    x = session_year_axis,
+    y = proportion_axis("Percentage of party seats"),
     color = list(
       field = "party",
       type = "nominal",
@@ -284,9 +274,9 @@ gender_by_party_plot <- list(
   )
 )  
 
-spec_party %>% 
-  c(list(autosize = list(type = "fit")),
-    gender_by_party_plot) %>% 
+spec_common %>% 
+  c(party_params) %>% 
+  c(gender_by_party_plot) %>% 
   write_json(here("docs", "spec-by-party.json"), 
   auto_unbox = TRUE, pretty = TRUE, null = "null")
 ```

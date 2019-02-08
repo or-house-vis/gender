@@ -46,31 +46,15 @@ gender_overall <- gender_overall %>%
   )
 ```
 
-Add some rows for annotation
-```{r}
-anno <- tribble(
-  ~ gender, ~ session_year, ~ prop,
-  "Male"  ,           1865,    0.95,
-  "Female",           2013,    0.05
-) %>% 
-  mutate(
-    session_year = ISOdate(year = session_year, 
-      month = 1, day = 1, tz = "utc")
-  )
-anno$data = "annotation"
-```
-
 ```{r}
 gender_overall_captioned <- 
-  gender_overall %>% 
-  mutate(data = "data") %>% 
-  bind_rows(anno)
+  gender_overall 
 ```
 Examine changes
 ```{r, eval = FALSE}
 library(daff)
 old <- read_csv(here("docs", "data", "vega-gender-overall.csv"))
-diffs <- diff_data(gender_overall_captioned, old, ordered = FALSE)
+diffs <- diff_data(old, gender_overall_captioned, ordered = FALSE)
 render_diff(diffs)
 ```
 
@@ -78,7 +62,6 @@ render_diff(diffs)
 gender_overall_captioned %>% 
   write_csv(here("docs", "data", "vega-gender-overall.csv"))
 ```
-
 
 # Gender by party
 
