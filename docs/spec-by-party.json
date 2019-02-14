@@ -17,12 +17,19 @@
   "encoding": {
     "x": {
       "field": "session_year",
-      "type": "temporal",
-      "timeUnit": "year",
+      "type": "quantitative",
       "axis": {
         "title": "",
         "values": [1860, 1875, 1900, 1925, 1950, 1975, 2000, 2019],
-        "grid": false
+        "grid": false,
+        "format": "4.0f"
+      },
+      "scale": {
+        "domain": [
+          1860,
+          2019
+        ],
+        "nice": false
       }
     },
     "y": {
@@ -34,6 +41,7 @@
           1
         ]
       },
+      "stack": null,
       "axis": {
         "values": [0, 0.25, 0.5, 0.75, 1],
         "format": "%",

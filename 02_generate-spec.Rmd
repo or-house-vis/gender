@@ -27,25 +27,30 @@ Common time axis:
 ```{r session-year-axis}
 session_year_axis <- list(
   field = "session_year",
-  type = "temporal",
-  timeUnit = "year",
+  type = "quantitative",
   axis = list(
     title = "",
     values = c(1860, seq(1875, end_year, by = 25), end_year),
-    grid = FALSE
+    grid = FALSE,
+    format = "4.0f"
+  ),
+  scale = list(
+    domain = list(1860, end_year),
+    nice = FALSE
   )
 )
 ```
 
 Proportions on the y-axis:
 ```{r proportion-axis}
-proportion_axis <- function(title) {
+proportion_axis <- function(title, stack) {
   list(
       field = "prop",
       type = "quantitative",
       scale = list(
         domain = list(0, 1)
       ),
+      stack = stack,
       axis = list(
         values = seq(0, 1, .25),
         format = "%",
@@ -78,11 +83,7 @@ anno <- tribble(
   ~ gender, ~ session_year, ~ prop,
   "Male"  ,           1865,    0.95,
   "Female",           2013,    0.05
-) %>% 
-  mutate(
-    session_year = ISOdate(year = session_year, 
-      month = 1, day = 1, tz = "utc")
-  )
+) 
 ```
 
 Annotation layers
@@ -122,7 +123,7 @@ female_anno <- annotation_layer(anno[2, ], "Female",
 gender_plot <- list(
   encoding = list(
     x = session_year_axis,
-    y = proportion_axis("Percentage of house seats"),
+    y = proportion_axis("Percentage of house seats", stack = "zero"),
     color = overall_color,
     opacity = list(
       value = 0.8
@@ -193,7 +194,7 @@ party_params <- list(
 gender_by_party_plot <- list(
   encoding = list(
     x = session_year_axis,
-    y = proportion_axis("Percentage of party seats"),
+    y = proportion_axis("Percentage of party seats", stack = NULL),
     color = list(
       field = "party",
       type = "nominal",

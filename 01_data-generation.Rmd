@@ -48,7 +48,8 @@ gender_overall <- gender_overall %>%
 
 ```{r}
 gender_overall_captioned <- 
-  gender_overall 
+  gender_overall %>% 
+  mutate(session_year = lubridate::year(session_year))
 ```
 Examine changes
 ```{r, eval = FALSE}
@@ -126,14 +127,15 @@ gender_by_party_captioned <- gender_by_party %>%
   mutate(
     session_year = ISOdate(year = session_year, 
       month = 1, day = 1, tz = "utc")
-  )
+  ) %>% 
+  mutate(session_year = lubridate::year(session_year))
 ```
 
 Examine changes
 ```{r, eval = FALSE}
 library(daff)
 old <- read_csv(here("docs", "data", "vega-gender-by-party.csv"))
-diffs <- diff_data(gender_by_party_captioned, old, ordered = FALSE)
+diffs <- diff_data(old, gender_by_party_captioned, ordered = FALSE)
 render_diff(diffs)
 ```
 

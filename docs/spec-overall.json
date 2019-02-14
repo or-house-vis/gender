@@ -17,12 +17,19 @@
   "encoding": {
     "x": {
       "field": "session_year",
-      "type": "temporal",
-      "timeUnit": "year",
+      "type": "quantitative",
       "axis": {
         "title": "",
         "values": [1860, 1875, 1900, 1925, 1950, 1975, 2000, 2019],
-        "grid": false
+        "grid": false,
+        "format": "4.0f"
+      },
+      "scale": {
+        "domain": [
+          1860,
+          2019
+        ],
+        "nice": false
       }
     },
     "y": {
@@ -34,6 +41,7 @@
           1
         ]
       },
+      "stack": "zero",
       "axis": {
         "values": [0, 0.25, 0.5, 0.75, 1],
         "format": "%",
@@ -95,7 +103,7 @@
         "values": [
           {
             "gender": "Male",
-            "session_year": "1865-01-01 12:00:00",
+            "session_year": 1865,
             "prop": 0.95
           }
         ]
@@ -123,7 +131,7 @@
         "values": [
           {
             "gender": "Female",
-            "session_year": "2013-01-01 12:00:00",
+            "session_year": 2013,
             "prop": 0.05
           }
         ]
