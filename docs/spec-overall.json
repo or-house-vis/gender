@@ -81,24 +81,6 @@
       "mark": "area"
     },
     {
-      "transform": [
-        {
-          "calculate": "if(datum.gender == 'Female', 0, 1)",
-          "as": "gender_order"
-        }
-      ],
-      "mark": "area",
-      "encoding": {
-        "opacity": {
-          "value": 0
-        },
-        "tooltip": {
-          "field": "caption",
-          "type": "nominal"
-        }
-      }
-    },
-    {
       "data": {
         "values": [
           {
@@ -151,6 +133,60 @@
         },
         "opacity": {
           "value": 0.5
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "calculate": "if(datum.gender == 'Female', 0, 1)",
+          "as": "gender_order"
+        }
+      ],
+      "mark": {
+        "type": "bar"
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative",
+          "axis": {
+            "title": "",
+            "values": [1860, 1875, 1900, 1925, 1950, 1975, 2000, 2019],
+            "grid": false,
+            "format": "4.0f"
+          },
+          "scale": {
+            "domain": [
+              1860,
+              2019
+            ],
+            "nice": false
+          }
+        },
+        "x2": {
+          "field": "x2",
+          "type": "quantitative",
+          "axis": {
+            "title": "",
+            "values": [1860, 1875, 1900, 1925, 1950, 1975, 2000, 2019],
+            "grid": false,
+            "format": "4.0f"
+          },
+          "scale": {
+            "domain": [
+              1860,
+              2019
+            ],
+            "nice": false
+          }
+        },
+        "opacity": {
+          "value": 0
+        },
+        "tooltip": {
+          "field": "caption",
+          "type": "nominal"
         }
       }
     }

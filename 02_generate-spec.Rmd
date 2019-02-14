@@ -25,20 +25,22 @@ spec_common <- list(
 
 Common time axis:
 ```{r session-year-axis}
-session_year_axis <- list(
-  field = "session_year",
-  type = "quantitative",
-  axis = list(
-    title = "",
-    values = c(1860, seq(1875, end_year, by = 25), end_year),
-    grid = FALSE,
-    format = "4.0f"
-  ),
-  scale = list(
-    domain = list(1860, end_year),
-    nice = FALSE
+session_year_axis <- function(field){
+  list(
+    field = field,
+    type = "quantitative",
+    axis = list(
+      title = "",
+      values = c(1860, seq(1875, end_year, by = 25), end_year),
+      grid = FALSE,
+      format = "4.0f"
+    ),
+    scale = list(
+      domain = list(1860, end_year),
+      nice = FALSE
+    )
   )
-)
+}
 ```
 
 Proportions on the y-axis:
@@ -122,7 +124,7 @@ female_anno <- annotation_layer(anno[2, ], "Female",
 ```{r gender-overall}
 gender_plot <- list(
   encoding = list(
-    x = session_year_axis,
+    x = session_year_axis("session_year"),
     y = proportion_axis("Percentage of house seats", stack = "zero"),
     color = overall_color,
     opacity = list(
@@ -146,6 +148,8 @@ gender_plot <- list(
       ),
       mark = "area"
     ),
+    male_anno,
+    female_anno,
     list(
       transform = list(
         list(
@@ -153,8 +157,12 @@ gender_plot <- list(
           as = "gender_order"
         )
       ),
-      mark = "area",
+      mark = list(
+        type = "bar"
+      ),
       encoding = list(
+        x = session_year_axis("x"),
+        x2 = session_year_axis("x2"),
         opacity = list(
           value = 0
         ),
@@ -163,9 +171,7 @@ gender_plot <- list(
           type = "nominal"
         )
       )
-    ),
-    male_anno,
-    female_anno
+    )
   )
 )  
 

@@ -51,6 +51,22 @@ gender_overall_captioned <-
   gender_overall %>% 
   mutate(session_year = lubridate::year(session_year))
 ```
+
+Extra data for tooltip layer
+```{r}
+gender_overall_captioned <- 
+  gender_overall_captioned %>% 
+  group_by(gender) %>% 
+  mutate(
+    last_session = lag(session_year, default = 1860),
+    next_session = lead(session_year, default = !!end_year + 1),
+    x = session_year - (session_year - last_session)/2,
+    x2 = session_year + (next_session - session_year)/2
+  ) %>% 
+  select(-last_session, -next_session)
+```
+
+
 Examine changes
 ```{r, eval = FALSE}
 library(daff)
