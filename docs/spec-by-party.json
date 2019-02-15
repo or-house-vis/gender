@@ -168,25 +168,18 @@
       }
     },
     {
-      "transform": [
-        {
-          "filter": {
-            "field": "party",
-            "equal": "Democrat"
-          }
-        },
-        {
-          "calculate": "1",
-          "as": "one"
-        }
-      ],
       "mark": {
         "type": "bar"
       },
       "encoding": {
         "y": {
-          "field": "one",
-          "type": "quantitative"
+          "field": "y"
+        },
+        "x": {
+          "field": "x"
+        },
+        "x2": {
+          "field": "x2"
         },
         "opacity": {
           "value": 0

@@ -307,23 +307,13 @@ gender_by_party_plot <- list(
     anno_party_layer, 
     time_selection_line,
     list(
-      transform = list(
-        list(filter = list(
-          field = "party", equal = "Democrat"
-        )),
-        list(
-          calculate = "1",
-          as = "one"
-        )
-      ),
       mark = list(
         type = "bar"
       ),
       encoding = list(
-        y = list(
-          field = "one",
-          type = "quantitative"
-        ),
+        y = list(field = "y"),
+        x = list(field = "x"),
+        x2 = list(field = "x2"),
         opacity = list(
           value = 0
         ),
