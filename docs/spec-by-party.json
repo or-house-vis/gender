@@ -108,12 +108,14 @@
           {
             "session_year": 2019,
             "party": "Democrat",
-            "prop": 0.58
+            "prop": 0.6,
+            "label": "Democrats"
           },
           {
             "session_year": 2019,
             "party": "Republican",
-            "prop": 0.05
+            "prop": 0.05,
+            "label": "Republicans"
           }
         ]
       },
@@ -124,7 +126,7 @@
       },
       "encoding": {
         "text": {
-          "field": "party",
+          "field": "label",
           "type": "nominal"
         },
         "y": {

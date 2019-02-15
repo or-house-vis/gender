@@ -200,9 +200,9 @@ party_params <- list(
 ### Annotation
 ```{r}
 anno_party <- tribble(
-  ~ session_year, ~ party, ~ prop,
-            2019,     "Democrat",    0.58,
-            2019,     "Republican",    0.05
+  ~ session_year,          ~ party,  ~ prop,    ~ label,
+            2019,       "Democrat",    0.60, "Democrats",
+            2019,     "Republican",    0.05, "Republicans",
 )
 ```
 
@@ -221,7 +221,7 @@ annotation_layer_party <- function(data){
     ),
     encoding = list(
       text = list(
-        field = "party",
+        field = "label",
         type = "nominal"
       ),
       y = list(
