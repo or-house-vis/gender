@@ -47,7 +47,8 @@
         "format": "%",
         "title": "Percentage of house seats",
         "ticks": false,
-        "labelPadding": 5
+        "labelPadding": 5,
+        "domainOpacity": 0
       }
     },
     "color": {

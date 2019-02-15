@@ -45,7 +45,7 @@ session_year_axis <- function(field){
 
 Proportions on the y-axis:
 ```{r proportion-axis}
-proportion_axis <- function(title, stack) {
+proportion_axis <- function(title, stack = NULL, opacity = 1) {
   list(
       field = "prop",
       type = "quantitative",
@@ -58,7 +58,8 @@ proportion_axis <- function(title, stack) {
         format = "%",
         title = title,
         ticks = FALSE,
-        labelPadding = 5
+        labelPadding = 5,
+        domainOpacity = opacity
       )
     )
 }
@@ -163,7 +164,8 @@ female_anno <- annotation_layer(anno[2, ], "Female",
 gender_plot <- list(
   encoding = list(
     x = session_year_axis("session_year"),
-    y = proportion_axis("Percentage of house seats", stack = "zero"),
+    y = proportion_axis("Percentage of house seats", stack = "zero",
+      opacity = 0),
     color = overall_color,
     opacity = list(
       value = 0.8
