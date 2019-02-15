@@ -71,24 +71,10 @@
   },
   "layer": [
     {
-      "transform": [
-        {
-          "filter": {
-            "field": "data",
-            "equal": "data"
-          }
-        }
-      ],
       "mark": "line"
     },
     {
       "transform": [
-        {
-          "filter": {
-            "field": "data",
-            "equal": "data"
-          }
-        },
         {
           "filter": {
             "field": "party",
@@ -117,14 +103,20 @@
       }
     },
     {
-      "transform": [
-        {
-          "filter": {
-            "field": "data",
-            "equal": "annotation"
+      "data": {
+        "values": [
+          {
+            "session_year": 2019,
+            "party": "Democrat",
+            "prop": 0.58
+          },
+          {
+            "session_year": 2019,
+            "party": "Republican",
+            "prop": 0.05
           }
-        }
-      ],
+        ]
+      },
       "mark": {
         "type": "text",
         "align": "right",

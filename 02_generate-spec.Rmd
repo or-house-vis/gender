@@ -196,10 +196,51 @@ party_params <- list(
   )
 ```
 
+
+### Annotation
+```{r}
+anno_party <- tribble(
+  ~ session_year, ~ party, ~ prop,
+            2019,     "Democrat",    0.58,
+            2019,     "Republican",    0.05
+)
+```
+
+
+Annotation layer
+```{r}
+annotation_layer_party <- function(data){
+  list(
+    data = list(
+      values = pmap(data, list)
+    ),
+    mark = list(
+      type = "text",
+      align = "right",
+      dx = 0
+    ),
+    encoding = list(
+      text = list(
+        field = "party",
+        type = "nominal"
+      ),
+      y = list(
+        stack = NULL,
+        field = "prop",
+        type = "quantitative"
+      )
+    )
+  )
+}
+
+anno_party_layer <- annotation_layer_party(anno_party)
+```
+
+
 ```{r gender-by-party}
 gender_by_party_plot <- list(
   encoding = list(
-    x = session_year_axis,
+    x = session_year_axis("session_year"),
     y = proportion_axis("Percentage of party seats", stack = NULL),
     color = list(
       field = "party",
@@ -216,18 +257,10 @@ gender_by_party_plot <- list(
   ),
   layer = list(
     list(
-      transform = list(
-        list(filter = list(
-          field = "data", equal = "data"
-        ))
-      ),
       mark = "line"
     ),
     list(
       transform = list(
-        list(filter = list(
-          field = "data", equal = "data"
-        )),
         list(filter = list(
           field = "party", equal = "Democrat"
         )),
@@ -252,32 +285,7 @@ gender_by_party_plot <- list(
         )
       )
     ),
-    list(
-      transform = list(
-        list(
-          filter = list(
-            field = "data",
-            equal = "annotation"
-          )
-        )
-      ),
-      mark = list(
-        type = "text",
-        align = "right",
-        dx = 0
-      ),
-      encoding = list(
-        text = list(
-          field = "party",
-          type = "nominal"
-        ),
-        y = list(
-          stack = NULL,
-          field = "prop",
-          type = "quantitative"
-        )
-      )
-    )
+    anno_party_layer 
   )
 )  
 
