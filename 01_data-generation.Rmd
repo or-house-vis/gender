@@ -8,7 +8,10 @@ library(tidyverse)
 library(glue)
 # devtools::install_github("or-house-vis/history")
 library(history) 
+end_year <- 2019
 ```
+
+
 # Gender overall
 
 Compute proportions of each gender:
