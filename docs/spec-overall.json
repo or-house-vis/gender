@@ -70,14 +70,26 @@
       "value": null
     }
   },
+  "transform": [
+    {
+      "calculate": "if(datum.gender == 'Female', 0, 1)",
+      "as": "gender_order"
+    }
+  ],
   "layer": [
     {
-      "transform": [
-        {
-          "calculate": "if(datum.gender == 'Female', 0, 1)",
-          "as": "gender_order"
+      "selection": {
+        "brush": {
+          "type": "single",
+          "on": "mouseover",
+          "encodings": [
+            "x"
+          ],
+          "nearest": true,
+          "resolve": "global",
+          "empty": "none"
         }
-      ],
+      },
       "mark": "area"
     },
     {
@@ -139,10 +151,43 @@
     {
       "transform": [
         {
-          "calculate": "if(datum.gender == 'Female', 0, 1)",
-          "as": "gender_order"
+          "filter": {
+            "selection": "brush"
+          }
         }
       ],
+      "mark": "rule",
+      "encoding": {
+        "x": {
+          "field": "session_year",
+          "type": "quantitative",
+          "axis": {
+            "title": "",
+            "values": [1860, 1875, 1900, 1925, 1950, 1975, 2000, 2019],
+            "grid": false,
+            "format": "4.0f"
+          },
+          "scale": {
+            "domain": [
+              1860,
+              2019
+            ],
+            "nice": false
+          }
+        },
+        "y": null,
+        "color": {
+          "value": "#333333"
+        },
+        "opacity": {
+          "value": 1
+        },
+        "tooltip": {
+          "value": null
+        }
+      }
+    },
+    {
       "mark": {
         "type": "bar"
       },

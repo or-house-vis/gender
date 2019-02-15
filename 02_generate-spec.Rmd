@@ -64,6 +64,44 @@ proportion_axis <- function(title, stack) {
 }
 ```
 
+Time indication line
+```{r}
+year_selection <- 
+  list(
+      brush = list(
+        type = "single",
+        on = "mouseover",
+        encodings = list("x"),
+        nearest = TRUE,
+        resolve = "global",
+        empty = "none"
+        )
+      )
+
+time_selection_line <- list(
+  transform = list(
+    list(
+      filter = list(
+        selection = "brush")
+    )
+  ),
+  mark = "rule",
+  encoding = list(
+    x = session_year_axis("session_year"),
+    y = NULL,
+    color = list(
+      value = "#333333"
+    ),
+    opacity = list(
+      value = 1
+    ),
+    tooltip = list(
+      value = NULL
+    )
+  )
+)
+```
+
 ## Gender Overall
 ```{r overall_color}
 overall_color <- 
@@ -138,25 +176,21 @@ gender_plot <- list(
       value = NULL
     )
   ),
+  transform = list(
+    list(
+      calculate = "if(datum.gender == 'Female', 0, 1)",
+      as = "gender_order"
+    )
+  ),
   layer = list(
     list(
-      transform = list(
-        list(
-          calculate = "if(datum.gender == 'Female', 0, 1)",
-          as = "gender_order"
-        )
-      ),
+      selection = year_selection,
       mark = "area"
     ),
     male_anno,
     female_anno,
+    time_selection_line,
     list(
-      transform = list(
-        list(
-          calculate = "if(datum.gender == 'Female', 0, 1)",
-          as = "gender_order"
-        )
-      ),
       mark = list(
         type = "bar"
       ),
@@ -260,6 +294,17 @@ gender_by_party_plot <- list(
       mark = "line"
     ),
     list(
+      mark = "point",
+      selection = year_selection,
+      encoding = list(
+        opacity = list(
+          value = 0
+        )
+      )
+    ),
+    anno_party_layer, 
+    time_selection_line,
+    list(
       transform = list(
         list(filter = list(
           field = "party", equal = "Democrat"
@@ -284,8 +329,7 @@ gender_by_party_plot <- list(
           field = "caption"
         )
       )
-    ),
-    anno_party_layer 
+    )
   )
 )  
 

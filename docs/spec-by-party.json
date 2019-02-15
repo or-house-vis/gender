@@ -74,31 +74,22 @@
       "mark": "line"
     },
     {
-      "transform": [
-        {
-          "filter": {
-            "field": "party",
-            "equal": "Democrat"
-          }
-        },
-        {
-          "calculate": "1",
-          "as": "one"
+      "mark": "point",
+      "selection": {
+        "brush": {
+          "type": "single",
+          "on": "mouseover",
+          "encodings": [
+            "x"
+          ],
+          "nearest": true,
+          "resolve": "global",
+          "empty": "none"
         }
-      ],
-      "mark": {
-        "type": "bar"
       },
       "encoding": {
-        "y": {
-          "field": "one",
-          "type": "quantitative"
-        },
         "opacity": {
           "value": 0
-        },
-        "tooltip": {
-          "field": "caption"
         }
       }
     },
@@ -133,6 +124,74 @@
           "stack": null,
           "field": "prop",
           "type": "quantitative"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": {
+            "selection": "brush"
+          }
+        }
+      ],
+      "mark": "rule",
+      "encoding": {
+        "x": {
+          "field": "session_year",
+          "type": "quantitative",
+          "axis": {
+            "title": "",
+            "values": [1860, 1875, 1900, 1925, 1950, 1975, 2000, 2019],
+            "grid": false,
+            "format": "4.0f"
+          },
+          "scale": {
+            "domain": [
+              1860,
+              2019
+            ],
+            "nice": false
+          }
+        },
+        "y": null,
+        "color": {
+          "value": "#333333"
+        },
+        "opacity": {
+          "value": 1
+        },
+        "tooltip": {
+          "value": null
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": {
+            "field": "party",
+            "equal": "Democrat"
+          }
+        },
+        {
+          "calculate": "1",
+          "as": "one"
+        }
+      ],
+      "mark": {
+        "type": "bar"
+      },
+      "encoding": {
+        "y": {
+          "field": "one",
+          "type": "quantitative"
+        },
+        "opacity": {
+          "value": 0
+        },
+        "tooltip": {
+          "field": "caption"
         }
       }
     }
