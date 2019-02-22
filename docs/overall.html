@@ -28,11 +28,12 @@
       defaultStyle: true, 
   	  tooltip: { sanitize: function sanitize(value) {return String(value);} },
   	  actions: false,
-  	  renderer: "svg"
+  	  renderer: "svg",
+  	  padding: {left: 0, top: 0, right: 0, bottom: 0}
   	})
   	  .then(function(result) {
           VIEW = result.view;
-          w = document.getElementById('charts').offsetWidth;
+          w = document.getElementById('charts').offsetWidth - 38;
           VIEW.width(w).run();
       })
       .catch(console.warn);
@@ -50,7 +51,7 @@
   	
   	addEvent(window, "resize", function(event) {
       const element = document.getElementById('charts');
-      VIEW.width(element.offsetWidth).run();
+      VIEW.width(element.offsetWidth - 38).run();
     });
   </script>
 

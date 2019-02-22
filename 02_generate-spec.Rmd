@@ -19,7 +19,7 @@ Common config:
 ```{r spec-common}
 spec_common <- list(
   `$schema` = "https://vega.github.io/schema/vega-lite/v3.json",
-  autosize = list(type = "fit"),
+  autosize = list(type = "fit", contains = "padding"),
   config = list(style = list(cell = list(stroke = "transparent"))))
 ```
 
