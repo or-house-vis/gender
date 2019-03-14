@@ -1,5 +1,5 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+  "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc1.json",
   "autosize": {
     "type": "fit",
     "contains": "padding"
@@ -84,7 +84,6 @@
           "encodings": [
             "x"
           ],
-          "nearest": true,
           "resolve": "global",
           "empty": "none"
         }
@@ -174,19 +173,23 @@
       },
       "encoding": {
         "y": {
-          "field": "y"
+          "field": "y",
+          "type": "quantitative"
         },
         "x": {
-          "field": "x"
+          "field": "x",
+          "type": "quantitative"
         },
         "x2": {
-          "field": "x2"
+          "field": "x2",
+          "type": "quantitative"
         },
         "opacity": {
           "value": 0
         },
         "tooltip": {
-          "field": "caption"
+          "field": "caption",
+          "type": "nominal"
         }
       }
     }

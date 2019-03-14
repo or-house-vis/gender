@@ -18,7 +18,7 @@ end_year <- 2019
 Common config:
 ```{r spec-common}
 spec_common <- list(
-  `$schema` = "https://vega.github.io/schema/vega-lite/v3.json",
+  `$schema` = "https://vega.github.io/schema/vega-lite/v3.0.0-rc1.json",
   autosize = list(type = "fit", contains = "padding"),
   config = list(style = list(cell = list(stroke = "transparent"))))
 ```
@@ -73,7 +73,6 @@ year_selection <-
         type = "single",
         on = "mouseover",
         encodings = list("x"),
-        nearest = TRUE,
         resolve = "global",
         empty = "none"
         )
@@ -172,7 +171,7 @@ gender_plot <- list(
     ),
     order = list(
       field = "gender_order",
-      type = "nominal"
+      type = "ordinal"
     ),
     tooltip = list(
       value = NULL
@@ -311,14 +310,15 @@ gender_by_party_plot <- list(
         type = "bar"
       ),
       encoding = list(
-        y = list(field = "y"),
-        x = list(field = "x"),
-        x2 = list(field = "x2"),
+        y = list(field = "y", type = "quantitative"),
+        x = list(field = "x", type = "quantitative"),
+        x2 = list(field = "x2", type = "quantitative"),
         opacity = list(
           value = 0
         ),
         tooltip = list(
-          field = "caption"
+          field = "caption",
+          type = "nominal"
         )
       )
     )
